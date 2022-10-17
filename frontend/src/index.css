@@ -11,8 +11,15 @@
 }
 body {
 	margin: 0;
-	display: flex;
-	place-items: center;
 	min-width: 320px;
 	min-height: 100vh;
+}
+.products {
+	display: flex;
+}
+.product {
+	border: 1px #404040 solid;
+}
+.product img {
+	width: 100%;
 }
