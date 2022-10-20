@@ -1,4 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const fetchData = createAsyncThunk(
+	"fetchData",
+	async (args, thunkAPI) => {
+		try {
+			const result = await axios.get("/api/products");
+			return result.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	}
+);
 
 const fetchEmptyState = {
 	products: [],
@@ -7,23 +20,28 @@ const fetchEmptyState = {
 };
 
 export const fetchSlice = createSlice({
-	name: "data",
+	name: "fetchData",
 	initialState: fetchEmptyState,
-	reducers: {
-		loadFetchData: (state, action) => {
-			return { ...state, products: action.payload, loading: true };
+	reducers: {},
+	extraReducers: {
+		[fetchData.pending]: (state, action) => {
+			state.products = [];
+			state.loading = true;
+			state.error = "";
 		},
-		successFetchData: (state, action) => {
-			return { ...state, loading: false };
+		[fetchData.fulfilled]: (state, action) => {
+			state.products = action.payload;
+			state.loading = false;
+			state.error = "";
 		},
-		errorFetchDataData: (state, action) => {
-			return { ...state, error: action.payload };
+		[fetchData.rejected]: (state, action) => {
+			state.products = [];
+			state.loading = false;
+			state.error = action.payload;
 		},
 	},
 });
 
-// Action creators are generated for each case reducer function
-export const { loadFetchData, successFetchData, errorFetchDataData } =
-	fetchSlice.actions;
+export const {} = fetchSlice.actions;
 
 export default fetchSlice.reducer;

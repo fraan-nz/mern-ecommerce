@@ -1,50 +1,34 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	loadFetchData,
-	successFetchData,
-	errorFetchDataData,
-} from "../redux/slices/fetchDataSlice";
+import { fetchData } from "../redux/slices/fetchDataSlice";
+import Product from "../components/Product/Product";
+import { StyledGridProducts } from "../components/Product/StyledProduct";
+import { Helmet } from "react-helmet-async";
 
 function HomeScreen() {
 	const dispatch = useDispatch();
-	const { products } = useSelector((state) => state.fetchData);
+	const { products, loading } = useSelector((state) => state.fetchData);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const result = await axios.get("/api/products");
-				console.log(result);
-				dispatch(loadFetchData(result.data));
-			} catch (error) {
-				dispatch(errorFetchDataData(error.message));
-			}
-			dispatch(successFetchData());
-		};
-
-		fetchData();
+		dispatch(fetchData("/api/products"));
 	}, []);
 
 	return (
-		<div>
-			<h1>list products</h1>
-			<div className="products">
-				{products.map((product) => (
-					<div key={product.slug} className="product">
-						<Link to={`/product/${product.slug}`}>
-							<img src={product.image} alt={product.name} />
-						</Link>
-						<Link to={`/product/${product.slug}`}>
-							<p>{product.name}</p>
-						</Link>
-						<p>{product.price}</p>
-						<button>Add to cart</button>
-					</div>
-				))}
-			</div>
-		</div>
+		<>
+			<Helmet>
+				<title>E-commerce</title>
+			</Helmet>
+			<h1>Products</h1>
+			<StyledGridProducts>
+				{loading ? (
+					<p>Loading...</p>
+				) : (
+					products.map((product) => (
+						<Product product={product} key={product.slug} />
+					))
+				)}
+			</StyledGridProducts>
+		</>
 	);
 }
 

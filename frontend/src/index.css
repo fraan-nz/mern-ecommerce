@@ -9,17 +9,16 @@
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
 }
-body {
+* {
 	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
 	min-width: 320px;
-	min-height: 100vh;
 }
-.products {
-	display: flex;
-}
-.product {
-	border: 1px #404040 solid;
-}
-.product img {
-	width: 100%;
+h1 {
+	font-size: 2rem;
+	font-weight: 600;
+	margin-bottom: 15px;
 }
