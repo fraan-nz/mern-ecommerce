@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import Badge from "../Badge/Badge";
 import { Nav, StyledLink, Bars, NavMenu, Container } from "./StyledNavBar";
+import { useSelector } from "react-redux";
+import { totalQuantity } from "../../utils/quantityReducer";
 
 const NavBar = () => {
 	const [openNav, setOpenNav] = useState(false);
+	const { prodsInCart } = useSelector((state) => state.cart);
 
 	const handleOpenNav = () => {
 		setOpenNav(!openNav);
@@ -19,7 +23,10 @@ const NavBar = () => {
 						to="/cart"
 						className={({ isActive }) => (isActive ? "active" : "")}
 					>
-						Cart
+						Cart{" "}
+						{prodsInCart.length > 0 && (
+							<Badge inCart={totalQuantity(prodsInCart)} />
+						)}
 					</StyledLink>
 					<StyledLink
 						to="/sigin"

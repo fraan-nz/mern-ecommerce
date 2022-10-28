@@ -6,6 +6,8 @@ import {
 	StyledStars,
 } from "../components/Product/StyledProduct";
 import { Helmet } from "react-helmet-async";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 
 function ProductScreen() {
 	const [product, setProduct] = useState({});
@@ -13,6 +15,7 @@ function ProductScreen() {
 	const [error, setError] = useState("");
 	const params = useParams();
 	const { slug } = params;
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const fetchDataById = async (id) => {
@@ -60,7 +63,12 @@ function ProductScreen() {
 								<span className="unavailable">Unavailable</span>
 							)}
 						</p>
-						<button className="button">Add to cart</button>
+						<button
+							className="button"
+							onClick={() => dispatch(addToCart(product))}
+						>
+							Add to cart
+						</button>
 					</div>
 				</StyledProdContainer>
 			)}

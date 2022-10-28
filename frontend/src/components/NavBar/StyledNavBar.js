@@ -8,6 +8,10 @@ export const Nav = styled.nav`
 	height: 60px;
 	display: flex;
 	justify-content: center;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
 `;
 
 export const Container = styled.div`
@@ -51,6 +55,7 @@ export const NavMenu = styled.ul`
 export const StyledLink = styled(NavLink)`
 	color: ${(props) => props.theme.white};
 	text-decoration: none;
+	position: relative;
 	cursor: pointer;
 	&.active {
 		color: ${(props) => props.theme.accent};
@@ -68,6 +73,13 @@ export const StyledLink = styled(NavLink)`
 		&.active {
 			color: ${(props) => props.theme.white};
 		}
+	}
+
+	&:hover div > span {
+		color: ${(props) => props.theme.white};
+	}
+	&.active div > span {
+		color: ${(props) => props.theme.white};
 	}
 	@media screen and (max-width: 768px) {
 		&.active {

@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slices/cartSlice";
 import { StyledProduct, StyledStars } from "./StyledProduct";
 
 function Product(props) {
 	const { product } = props;
+
+	const dispatch = useDispatch();
 
 	return (
 		<StyledProduct>
@@ -19,7 +23,9 @@ function Product(props) {
 					<span>{product.numReviews} Reviews</span>
 				</StyledStars>
 				<span className="price">$ {product.price}</span>
-				<button className="button">Add to cart</button>
+				<button className="button" onClick={() => dispatch(addToCart(product))}>
+					Add to cart
+				</button>
 			</div>
 		</StyledProduct>
 	);
