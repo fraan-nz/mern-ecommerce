@@ -50,6 +50,9 @@ export const StyledProduct = styled.div`
 		border: 1px solid ${(props) => props.theme.secondary};
 		border-radius: 2px;
 		margin-top: 5px;
+		&:disabled {
+			filter: opacity(0.5);
+		}
 	}
 `;
 
@@ -150,6 +153,10 @@ export const StyledProdContainer = styled.div`
 			margin-left: auto;
 			margin-right: auto;
 			text-align: center;
+
+			&:disabled {
+				filter: opacity(0.5);
+			}
 		}
 	}
 

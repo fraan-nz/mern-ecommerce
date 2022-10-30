@@ -23,7 +23,11 @@ function Product(props) {
 					<span>{product.numReviews} Reviews</span>
 				</StyledStars>
 				<span className="price">$ {product.price}</span>
-				<button className="button" onClick={() => dispatch(addToCart(product))}>
+				<button
+					className="button"
+					onClick={() => dispatch(addToCart(product))}
+					disabled={product.countInStock < 1}
+				>
 					Add to cart
 				</button>
 			</div>

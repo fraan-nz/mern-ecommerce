@@ -66,6 +66,7 @@ function ProductScreen() {
 						<button
 							className="button"
 							onClick={() => dispatch(addToCart(product))}
+							disabled={product.countInStock < 1}
 						>
 							Add to cart
 						</button>
