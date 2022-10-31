@@ -9,6 +9,8 @@ function Product(props) {
 
 	const dispatch = useDispatch();
 
+	console.log(product.countInStock);
+
 	return (
 		<StyledProduct>
 			<Link to={`/product/${product.slug}`}>
@@ -28,7 +30,7 @@ function Product(props) {
 					onClick={() => dispatch(addToCart(product))}
 					disabled={product.countInStock < 1}
 				>
-					Add to cart
+					{product.countInStock < 1 ? "Out of stock" : "Add to cart"}
 				</button>
 			</div>
 		</StyledProduct>

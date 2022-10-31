@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "../components/Cart/CartItem";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
 	StyledCart,
@@ -10,6 +11,11 @@ import { totalAmount, totalQuantity } from "../utils/quantityReducer";
 
 function CartScreen() {
 	const { prodsInCart } = useSelector((state) => state.cart);
+	const navigate = useNavigate();
+
+	const checkoutHandler = () => {
+		navigate("/signin?redirect=/shipping");
+	};
 
 	return (
 		<>
@@ -26,7 +32,11 @@ function CartScreen() {
 				<div className="subtotal">
 					Subtotal ({totalQuantity(prodsInCart)}) items : <br /> ${" "}
 					{totalAmount(prodsInCart)}
-					<button className="checkout" disabled={prodsInCart.length === 0}>
+					<button
+						className="checkout"
+						disabled={prodsInCart.length === 0}
+						onClick={checkoutHandler}
+					>
 						Proceed to Checkout
 					</button>
 				</div>
