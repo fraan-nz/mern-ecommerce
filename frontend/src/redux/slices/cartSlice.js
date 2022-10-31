@@ -9,7 +9,7 @@ export const addToCart = createAsyncThunk(
 			const { cart } = thunkAPI.getState();
 			const existItem = cart.prodsInCart.find((X) => X.slug === prod.slug);
 			const quantity = existItem ? existItem.quantity + 1 : 1;
-			const { data } = await axios.get(`/api/product/${prod.slug}`);
+			const { data } = await axios.get(`/api/products/${prod.slug}`);
 			if (data.countInStock < quantity) {
 				window.alert("Sorry. Product is out of stock");
 				return;
@@ -27,7 +27,7 @@ export const removeCart = createAsyncThunk(
 	async (prod, thunkAPI) => {
 		try {
 			const quantity = prod.quantity === 1 ? 1 : prod.quantity - 1;
-			const { data } = await axios.get(`/api/product/${prod.slug}`);
+			const { data } = await axios.get(`/api/products/${prod.slug}`);
 			if (data.countInStock < quantity) {
 				window.alert("Sorry. Product is out of stock");
 				return;

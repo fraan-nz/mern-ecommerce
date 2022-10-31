@@ -29,7 +29,7 @@ const NavBar = () => {
 						)}
 					</StyledLink>
 					<StyledLink
-						to="/sigin"
+						to="/signin"
 						className={({ isActive }) => (isActive ? "active" : "")}
 					>
 						Sign In

@@ -20,7 +20,7 @@ function ProductScreen() {
 	useEffect(() => {
 		const fetchDataById = async (id) => {
 			try {
-				const result = await axios.get(`/api/product/${id}`);
+				const result = await axios.get(`/api/products/${id}`);
 				setProduct(result.data);
 				setLoading(false);
 			} catch (error) {

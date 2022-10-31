@@ -9,8 +9,6 @@ function Product(props) {
 
 	const dispatch = useDispatch();
 
-	console.log(product.countInStock);
-
 	return (
 		<StyledProduct>
 			<Link to={`/product/${product.slug}`}>
