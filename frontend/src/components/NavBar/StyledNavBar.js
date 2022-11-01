@@ -50,6 +50,46 @@ export const NavMenu = styled.ul`
 
 		${(props) => props.isOpen && `max-height: 130px; `}
 	}
+
+	.dropdown__container {
+		position: relative;
+
+		button {
+			background: none;
+			border: none;
+			color: ${(props) => props.theme.white};
+			font-size: 1rem;
+			cursor: pointer;
+
+			&:last-child {
+				&:hover {
+					color: ${(props) => props.theme.accent};
+				}
+			}
+		}
+	}
+`;
+
+export const StyledDropDown = styled.ul`
+	width: max-content;
+	padding: 10px;
+	background-color: ${(props) => props.theme.secondary};
+	position: absolute;
+	top: 42px;
+	right: -20px;
+	flex-direction: column;
+	gap: 10px;
+	text-align: center;
+	border-radius: 5px;
+	display: none;
+
+	${({ open }) => {
+		return open
+			? `
+		display: flex;
+		`
+			: "";
+	}}
 `;
 
 export const StyledLink = styled(NavLink)`

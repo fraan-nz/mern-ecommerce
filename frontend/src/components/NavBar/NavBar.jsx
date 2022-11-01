@@ -1,15 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Badge from "../Badge/Badge";
-import { Nav, StyledLink, Bars, NavMenu, Container } from "./StyledNavBar";
-import { useSelector } from "react-redux";
+import {
+	Nav,
+	StyledLink,
+	Bars,
+	NavMenu,
+	Container,
+	StyledDropDown,
+} from "./StyledNavBar";
+import { useDispatch, useSelector } from "react-redux";
 import { totalQuantity } from "../../utils/quantityReducer";
+import { logoutUser } from "../../redux/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 	const [openNav, setOpenNav] = useState(false);
+	const [dropdown, setDropdown] = useState(false);
 	const { prodsInCart } = useSelector((state) => state.cart);
+	const { userInfo } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!userInfo) {
+			navigate("/");
+		}
+	}, [userInfo]);
 
 	const handleOpenNav = () => {
 		setOpenNav(!openNav);
+	};
+
+	const handleOpenDropdown = () => {
+		setDropdown(!dropdown);
 	};
 
 	return (
@@ -28,14 +51,27 @@ const NavBar = () => {
 							<Badge inCart={totalQuantity(prodsInCart)} />
 						)}
 					</StyledLink>
-					<StyledLink
-						to="/signin"
-						className={({ isActive }) => (isActive ? "active" : "")}
-					>
-						Sign In
-					</StyledLink>
+					<div className="dropdown__container">
+						{userInfo ? (
+							<button onClick={handleOpenDropdown}>{userInfo.name}</button>
+						) : (
+							<StyledLink
+								to="/signin"
+								className={({ isActive }) => (isActive ? "active" : "")}
+							>
+								Sign In
+							</StyledLink>
+						)}
+						{userInfo ? (
+							<StyledDropDown open={dropdown}>
+								<StyledLink to="/profile">User Profile</StyledLink>
+								<StyledLink to="/orderhistory">Order History</StyledLink>
+								<button onClick={() => dispatch(logoutUser())}>Sign Out</button>
+							</StyledDropDown>
+						) : null}
+					</div>
 				</NavMenu>
-				<Bars onClick={() => handleOpenNav()} />
+				<Bars onClick={handleOpenNav} />
 			</Container>
 		</Nav>
 	);
