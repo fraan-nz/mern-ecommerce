@@ -39,6 +39,9 @@ const userEmptyState = {
 	shippingAddress: localStorage.getItem("shippingAddress")
 		? JSON.parse(localStorage.getItem("shippingAddress"))
 		: null,
+	paymentMethod: localStorage.getItem("paymentMethod")
+		? JSON.parse(localStorage.getItem("paymentMethod"))
+		: null,
 };
 
 export const userSlice = createSlice({
@@ -49,10 +52,15 @@ export const userSlice = createSlice({
 			state.userInfo = null;
 			localStorage.removeItem("userData");
 			localStorage.removeItem("shippingAddress");
+			localStorage.removeItem("paymentMethod");
 		},
 		saveShippingAddress(state, action) {
 			state.shippingAddress = { ...action.payload };
 			localStorage.setItem("shippingAddress", JSON.stringify(action.payload));
+		},
+		savePaymentMethod(state, action) {
+			state.paymentMethod = action.payload;
+			localStorage.setItem("paymentMethod", JSON.stringify(action.payload));
 		},
 	},
 	extraReducers: {
@@ -85,6 +93,7 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { logoutUser, saveShippingAddress } = userSlice.actions;
+export const { logoutUser, saveShippingAddress, savePaymentMethod } =
+	userSlice.actions;
 
 export default userSlice.reducer;

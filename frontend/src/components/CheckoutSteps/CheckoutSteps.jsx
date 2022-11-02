@@ -1,8 +1,7 @@
 import React from "react";
 import { StyledSteps } from "./StyledSteps";
 
-function CheckouSteps(props) {
-	console.log(props);
+function CheckoutSteps(props) {
 	return (
 		<StyledSteps>
 			<div className={props.step1 ? "active" : ""}>Sign In</div>
@@ -13,4 +12,4 @@ function CheckouSteps(props) {
 	);
 }
 
-export default CheckouSteps;
+export default CheckoutSteps;

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../redux/slices/userSlice";
-import CheckouSteps from "../components/CheckoutSteps/CheckouSteps";
+import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
 
 function ShippingAdressScreen() {
 	const { shippingAddress, userInfo } = useSelector((store) => store.user);
@@ -13,7 +13,7 @@ function ShippingAdressScreen() {
 	const addressInfo = shippingAddress || "";
 
 	const [fullName, setFullName] = useState(addressInfo.fullName || "");
-	const [adress, setAdress] = useState(addressInfo.adress || "");
+	const [address, setAddress] = useState(addressInfo.adress || "");
 	const [city, setCity] = useState(addressInfo.city || "");
 	const [postalCode, setPostalCode] = useState(addressInfo.postalCode || "");
 	const [country, setCountry] = useState(addressInfo.country || "");
@@ -22,7 +22,7 @@ function ShippingAdressScreen() {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(
-			saveShippingAddress({ fullName, adress, city, postalCode, country })
+			saveShippingAddress({ fullName, address, city, postalCode, country })
 		);
 		navigate("/payment");
 	};
@@ -35,7 +35,7 @@ function ShippingAdressScreen() {
 
 	return (
 		<>
-			<CheckouSteps step1 step2 />
+			<CheckoutSteps step1 step2 />
 			<h1>Shipping Address</h1>{" "}
 			<form onSubmit={submitHandler}>
 				<label>
@@ -51,12 +51,12 @@ function ShippingAdressScreen() {
 				</label>
 
 				<label>
-					Adress
+					Address
 					<input
 						type="text"
-						value={adress}
+						value={address}
 						onChange={(e) => {
-							setAdress(e.target.value);
+							setAddress(e.target.value);
 						}}
 						required
 					/>
