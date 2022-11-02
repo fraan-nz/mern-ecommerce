@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../redux/slices/userSlice";
+import CheckouSteps from "../components/CheckoutSteps/CheckouSteps";
 
 function ShippingAdressScreen() {
 	const { shippingAddress, userInfo } = useSelector((store) => store.user);
@@ -34,6 +35,7 @@ function ShippingAdressScreen() {
 
 	return (
 		<>
+			<CheckouSteps step1 step2 />
 			<h1>Shipping Address</h1>{" "}
 			<form onSubmit={submitHandler}>
 				<label>
