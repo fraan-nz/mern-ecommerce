@@ -1,11 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loginUser = createAsyncThunk(
+export const signInUser = createAsyncThunk(
 	"userSlice",
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const { data } = await axios.post("/api/users/signin", {
+				email,
+				password,
+			});
+			return data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	}
+);
+
+export const signUpUser = createAsyncThunk(
+	"userSlice",
+	async ({ name, email, password }, thunkAPI) => {
+		try {
+			const { data } = await axios.post("/api/users/signup", {
+				name,
 				email,
 				password,
 			});
@@ -42,12 +58,24 @@ export const userSlice = createSlice({
 	extraReducers: {
 		// [loginUser.pending]: (state, action) => {
 		// },
-		[loginUser.fulfilled]: (state, action) => {
+		[signInUser.fulfilled]: (state, action) => {
 			state.userInfo = { ...action.payload };
 			state.userInfo.error = "";
 			localStorage.setItem("userData", JSON.stringify(action.payload));
 		},
-		[loginUser.rejected]: (state, action) => {
+		[signInUser.rejected]: (state, action) => {
+			state.userInfo.email = "";
+			state.userInfo.isAdmin = "";
+			state.userInfo._id = "";
+			state.userInfo.token = "";
+			state.error = action.payload;
+		},
+		[signUpUser.fulfilled]: (state, action) => {
+			state.userInfo = { ...action.payload };
+			state.userInfo.error = "";
+			localStorage.setItem("userData", JSON.stringify(action.payload));
+		},
+		[signUpUser.rejected]: (state, action) => {
 			state.userInfo.email = "";
 			state.userInfo.isAdmin = "";
 			state.userInfo._id = "";

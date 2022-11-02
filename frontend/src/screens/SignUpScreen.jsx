@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { StyledSignIn } from "../styles/StyledSignIn";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { signInUser } from "../redux/slices/userSlice";
+import { signUpUser } from "../redux/slices/userSlice";
 import { useEffect } from "react";
 
-function SignInScreen() {
+function SignUpScreen() {
 	const { userInfo } = useSelector((state) => state.user);
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 	const { search } = useLocation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -17,7 +19,10 @@ function SignInScreen() {
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		dispatch(signInUser({ email, password }));
+		if (password !== confirmPassword) {
+			alert("Passwords do not match");
+		}
+		dispatch(signUpUser({ name, email, password }));
 	};
 
 	useEffect(() => {
@@ -28,8 +33,16 @@ function SignInScreen() {
 
 	return (
 		<StyledSignIn>
-			<h1>Sign In</h1>
+			<h1>Sign Up</h1>
 			<form onSubmit={submitHandler}>
+				<label>
+					Name
+					<input
+						type="text"
+						required
+						onChange={(e) => setName(e.target.value)}
+					/>
+				</label>
 				<label>
 					Email
 					<input
@@ -46,14 +59,22 @@ function SignInScreen() {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</label>
-				<button>Sign In</button>
+				<label>
+					Confirm Password
+					<input
+						type="password"
+						required
+						onChange={(e) => setConfirmPassword(e.target.value)}
+					/>
+				</label>
+				<button>Sign Up</button>
 			</form>
 			<p>
-				New customer?{" "}
-				<Link to={`/signup?redirect=${redirect}`}>Create you account</Link>
+				Already have an account?{" "}
+				<Link to={`/signin?redirect=${redirect}`}>Sign In</Link>
 			</p>
 		</StyledSignIn>
 	);
 }
 
-export default SignInScreen;
+export default SignUpScreen;
