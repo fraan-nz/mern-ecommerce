@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
 import { useEffect } from "react";
 import { savePaymentMethod } from "../redux/slices/userSlice";
+import { StyledOrder } from "../styles/StyledPayment";
 
 function PaymentScreen() {
 	const { shippingAddress, paymentMethod } = useSelector((state) => state.user);
@@ -26,10 +27,10 @@ function PaymentScreen() {
 	};
 
 	return (
-		<div>
+		<StyledOrder>
 			<CheckoutSteps step1 step2 step3 />
 			<h1>Payment Method</h1>
-			<form onSubmit={submitHandler}>
+			<form onSubmit={submitHandler} className="payment">
 				<label>
 					<input
 						type="radio"
@@ -53,7 +54,7 @@ function PaymentScreen() {
 				</label>
 				<button>Continue</button>
 			</form>
-		</div>
+		</StyledOrder>
 	);
 }
 

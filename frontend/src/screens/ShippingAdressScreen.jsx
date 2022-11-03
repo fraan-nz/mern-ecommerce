@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../redux/slices/userSlice";
 import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
+import { StyledOrder } from "../styles/StyledPayment";
 
 function ShippingAdressScreen() {
 	const { shippingAddress, userInfo } = useSelector((store) => store.user);
@@ -13,7 +14,7 @@ function ShippingAdressScreen() {
 	const addressInfo = shippingAddress || "";
 
 	const [fullName, setFullName] = useState(addressInfo.fullName || "");
-	const [address, setAddress] = useState(addressInfo.adress || "");
+	const [address, setAddress] = useState(addressInfo.address || "");
 	const [city, setCity] = useState(addressInfo.city || "");
 	const [postalCode, setPostalCode] = useState(addressInfo.postalCode || "");
 	const [country, setCountry] = useState(addressInfo.country || "");
@@ -34,10 +35,10 @@ function ShippingAdressScreen() {
 	}, [userInfo, navigate]);
 
 	return (
-		<>
+		<StyledOrder>
 			<CheckoutSteps step1 step2 />
-			<h1>Shipping Address</h1>{" "}
-			<form onSubmit={submitHandler}>
+			<h1>Shipping Address</h1>
+			<form onSubmit={submitHandler} className="address">
 				<label>
 					Full Name
 					<input
@@ -100,7 +101,7 @@ function ShippingAdressScreen() {
 
 				<button>Continue</button>
 			</form>
-		</>
+		</StyledOrder>
 	);
 }
 

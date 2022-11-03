@@ -11,11 +11,11 @@ function Product(props) {
 
 	return (
 		<StyledProduct>
-			<Link to={`/product/${product.slug}`}>
+			<Link to={`/products/${product.slug}`}>
 				<img src={product.image} alt={product.name} />
 			</Link>
 			<div className="container">
-				<Link to={`/product/${product.slug}`} className="title">
+				<Link to={`/products/${product.slug}`} className="title">
 					<p>{product.name}</p>
 				</Link>
 				<StyledStars rating={product.rating}>

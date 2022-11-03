@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar/NavBar";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ShippingAdressScreen from "./screens/ShippingAdressScreen";
 import SignInScreen from "./screens/SignInScreen";
@@ -15,12 +16,13 @@ function App() {
 			<NavBar />
 			<Layout>
 				<Routes>
-					<Route path="/product/:slug" element={<ProductScreen />} />
+					<Route path="/products/:slug" element={<ProductScreen />} />
 					<Route path="/cart" element={<CartScreen />} />
 					<Route path="/signin" element={<SignInScreen />} />
 					<Route path="/signup" element={<SignUpScreen />} />
 					<Route path="/shipping" element={<ShippingAdressScreen />} />
 					<Route path="/payment" element={<PaymentScreen />} />
+					<Route path="/placeorder" element={<PlaceOrderScreen />} />
 					<Route path="/" element={<HomeScreen />} />
 				</Routes>
 			</Layout>
