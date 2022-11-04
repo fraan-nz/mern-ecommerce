@@ -1,4 +1,3 @@
-import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -25,6 +24,18 @@ export const Container = styled.div`
 
 	@media screen and (max-width: 768px) {
 		padding-inline: 5%;
+	}
+
+	.burger__btn {
+		display: none;
+		color: ${(props) => props.theme.white};
+		font-size: 1.8rem;
+		background: none;
+		border: none;
+		@media screen and (max-width: 768px) {
+			display: block;
+			cursor: pointer;
+		}
 	}
 `;
 
@@ -128,15 +139,5 @@ export const StyledLink = styled(NavLink)`
 		&:hover {
 			color: ${(props) => props.theme.accent};
 		}
-	}
-`;
-
-export const Bars = styled(FaBars)`
-	display: none;
-	color: ${(props) => props.theme.white};
-	font-size: 1.8rem;
-	@media screen and (max-width: 768px) {
-		display: block;
-		cursor: pointer;
 	}
 `;

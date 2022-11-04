@@ -1,16 +1,26 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
+import {
+	createOrder,
+	successfulOrder,
+	rejectedOrder,
+} from "../redux/slices/orderSlice";
 import { StyledOrder } from "../styles/StyledPayment";
 import { roundPrice } from "../utils/priceRound";
 import { totalAmount } from "../utils/quantityReducer";
+import axios from "axios";
 
 function PlaceOrderScreen() {
-	const { shippingAddress, paymentMethod } = useSelector((state) => state.user);
+	const { shippingAddress, paymentMethod, userInfo } = useSelector(
+		(state) => state.user
+	);
 	const { prodsInCart } = useSelector((state) => state.cart);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
+	const subTotalPrice = roundPrice(totalAmount(prodsInCart));
 	const shippingPrice =
 		totalAmount(prodsInCart) > 100 ? roundPrice(0) : roundPrice(10);
 	const ivaPrice = roundPrice(totalAmount(prodsInCart) * 0.21);
@@ -24,6 +34,35 @@ function PlaceOrderScreen() {
 			navigate("/payment");
 		}
 	}, [paymentMethod]);
+
+	const placeOrderHandler = async () => {
+		try {
+			dispatch(createOrder());
+			const { data } = await axios.post(
+				"/api/orders",
+				{
+					orderItems: prodsInCart,
+					shippingAddress: shippingAddress,
+					paymentMethod: paymentMethod,
+					subtotalPrice: subTotalPrice,
+					shippingPrice: shippingPrice,
+					ivaPrice: ivaPrice,
+					totalPrice: totalPrice,
+				},
+				{
+					headers: {
+						authorization: `Bearer ${userInfo.token}`,
+					},
+				}
+			);
+			dispatch(successfulOrder());
+			console.log(data);
+			navigate(`/order/${data.order._id}`);
+		} catch (error) {
+			console.log(error);
+			dispatch(rejectedOrder());
+		}
+	};
 
 	return (
 		<StyledOrder>
@@ -71,7 +110,7 @@ function PlaceOrderScreen() {
 					<h3>Order Sumary</h3>
 					<div>
 						<p>Subtotal</p>
-						<p>$ {roundPrice(totalAmount(prodsInCart))}</p>
+						<p>$ {subTotalPrice}</p>
 					</div>
 					<div>
 						<p>Shipping</p>
@@ -86,6 +125,9 @@ function PlaceOrderScreen() {
 						<p>Total</p>
 						<p>$ {totalPrice}</p>
 					</strong>
+					<button className="order-total" onClick={placeOrderHandler}>
+						Place Order
+					</button>
 				</div>
 			</div>
 		</StyledOrder>

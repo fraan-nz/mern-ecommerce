@@ -3,7 +3,6 @@ import Badge from "../Badge/Badge";
 import {
 	Nav,
 	StyledLink,
-	Bars,
 	NavMenu,
 	Container,
 	StyledDropDown,
@@ -12,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { totalQuantity } from "../../utils/quantityReducer";
 import { logoutUser } from "../../redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { FaBars } from "react-icons/fa";
 
 const NavBar = () => {
 	const [openNav, setOpenNav] = useState(false);
@@ -20,27 +21,15 @@ const NavBar = () => {
 	const { userInfo } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const ref = useRef();
+	const menuRef = useRef();
+	const btnRef = useRef();
+	useOnClickOutside({ btnRef, menuRef }, () => setOpenNav(false));
 
 	useEffect(() => {
 		if (!userInfo) {
 			navigate("/");
 		}
 	}, [userInfo]);
-
-	useEffect(() => {
-		const clickOutside = (e) => {
-			if (ref.current && !ref.current.contains(e.target)) {
-				handleOpenNav();
-			}
-		};
-
-		document.addEventListener("click", clickOutside);
-
-		return () => {
-			document.removeEventListener("click", clickOutside);
-		};
-	}, []);
 
 	const handleOpenNav = () => {
 		setOpenNav(!openNav);
@@ -56,9 +45,10 @@ const NavBar = () => {
 				<StyledLink to="/" className="brand">
 					E-commerce
 				</StyledLink>
-				<NavMenu isOpen={openNav} ref={menu}>
+				<NavMenu isOpen={openNav} ref={menuRef}>
 					<StyledLink
 						to="/cart"
+						onClick={() => setOpenNav(false)}
 						className={({ isActive }) => (isActive ? "active" : "")}
 					>
 						Cart{" "}
@@ -72,6 +62,7 @@ const NavBar = () => {
 						) : (
 							<StyledLink
 								to="/signin"
+								onClick={() => setOpenNav(false)}
 								className={({ isActive }) => (isActive ? "active" : "")}
 							>
 								Sign In
@@ -86,7 +77,9 @@ const NavBar = () => {
 						) : null}
 					</div>
 				</NavMenu>
-				<Bars onClick={handleOpenNav} />
+				<button className="burger__btn" onClick={handleOpenNav} ref={btnRef}>
+					<FaBars />
+				</button>
 			</Container>
 		</Nav>
 	);

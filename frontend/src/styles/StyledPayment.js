@@ -132,6 +132,19 @@ export const StyledOrder = styled.div`
 			div {
 				border-bottom: 1px solid lightgray;
 			}
+
+			.order-total {
+				display: block;
+				font-weight: 400;
+				font-size: 1.2rem;
+				padding: 4px 10px;
+				cursor: pointer;
+				background-color: ${(props) => props.theme.accent};
+				color: ${(props) => props.theme.secondary};
+				border: 1px solid ${(props) => props.theme.secondary};
+				border-radius: 2px;
+				margin-top: 30px;
+			}
 		}
 	}
 `;
