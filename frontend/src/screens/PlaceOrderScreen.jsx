@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
 import {
 	createOrder,
@@ -11,6 +11,11 @@ import { StyledOrder } from "../styles/StyledPayment";
 import { roundPrice } from "../utils/priceRound";
 import { totalAmount } from "../utils/quantityReducer";
 import axios from "axios";
+import { deleteAllCart } from "../redux/slices/cartSlice";
+import OrderSummary from "../components/OrderElements/OrderSummary";
+import ShippingCard from "../components/OrderElements/ShippingCard";
+import PaymentCard from "../components/OrderElements/PaymentCard";
+import OrderItems from "../components/OrderElements/OrderItems";
 
 function PlaceOrderScreen() {
 	const { shippingAddress, paymentMethod, userInfo } = useSelector(
@@ -56,8 +61,8 @@ function PlaceOrderScreen() {
 				}
 			);
 			dispatch(successfulOrder());
-			console.log(data);
-			navigate(`/order/${data.order._id}`);
+			dispatch(deleteAllCart());
+			navigate(`/orders/${data.order._id}`);
 		} catch (error) {
 			console.log(error);
 			dispatch(rejectedOrder());
@@ -71,63 +76,23 @@ function PlaceOrderScreen() {
 			<div className="order">
 				<div className="order-info">
 					<div className="order-card">
-						<h3>Shipping</h3>
-						<p>
-							<strong>Name:</strong> {shippingAddress.fullName} <br />
-							<strong>Address: </strong> {shippingAddress.address},{" "}
-							{shippingAddress.city}, {shippingAddress.postalCode},{" "}
-							{shippingAddress.country}
-						</p>
-						<Link to="/shipping">Edit</Link>
+						<ShippingCard shippingAddress={shippingAddress} />
 					</div>
 					<div className="order-card">
-						<h3>Payment</h3>
-						<p>
-							<strong>Method:</strong> {paymentMethod}
-						</p>
-						<Link to="/payment">Edit</Link>
+						<PaymentCard paymentMethod={paymentMethod} />
 					</div>
 					<div className="order-card">
-						<h3>Items</h3>
-						{prodsInCart.map((item) => {
-							return (
-								<div className="order-items" key={item.slug}>
-									<img src={item.image} alt={item.name} />
-									<Link to={`/products/${item.slug}`}>{item.name}</Link>
-									<span>
-										<strong>Quantity:</strong> {item.quantity}
-									</span>
-									<span>
-										<strong>Price:</strong> ${item.price} c/u
-									</span>
-								</div>
-							);
-						})}
-						<Link to="/cart">Edit</Link>
+						<OrderItems prodsInCart={prodsInCart} />
 					</div>
 				</div>
 				<div className="order-total">
-					<h3>Order Sumary</h3>
-					<div>
-						<p>Subtotal</p>
-						<p>$ {subTotalPrice}</p>
-					</div>
-					<div>
-						<p>Shipping</p>
-						<p>$ {shippingPrice}</p>
-					</div>
-					<div>
-						<p>Iva</p>
-						<p>$ {ivaPrice}</p>
-					</div>
-
-					<strong>
-						<p>Total</p>
-						<p>$ {totalPrice}</p>
-					</strong>
-					<button className="order-total" onClick={placeOrderHandler}>
-						Place Order
-					</button>
+					<OrderSummary
+						subTotalPrice={subTotalPrice}
+						shippingPrice={shippingPrice}
+						ivaPrice={ivaPrice}
+						totalPrice={totalPrice}
+						placeOrderHandler={placeOrderHandler}
+					/>
 				</div>
 			</div>
 		</StyledOrder>
