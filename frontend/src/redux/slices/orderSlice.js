@@ -17,7 +17,12 @@ export const fetchOrder = createAsyncThunk(
 	}
 );
 
-const orderSliceEmptyState = { loading: false, order: {}, error: "" };
+const orderSliceEmptyState = {
+	loading: false,
+	order: {},
+	error: "",
+	successPay: false,
+};
 
 export const orderSlice = createSlice({
 	name: "orderSlice",
@@ -31,6 +36,20 @@ export const orderSlice = createSlice({
 		},
 		rejectedOrder(state, action) {
 			state.loading = false;
+		},
+		payRequest(state, action) {
+			state.loading = true;
+		},
+		paySuccess(state, action) {
+			state.loading = false;
+			state.successPay = true;
+		},
+		payFail(state, action) {
+			state.loading = false;
+		},
+		payReset(state, action) {
+			state.loading = false;
+			state.successPay = false;
 		},
 	},
 	extraReducers: {
@@ -52,7 +71,14 @@ export const orderSlice = createSlice({
 	},
 });
 
-export const { createOrder, successfulOrder, rejectedOrder } =
-	orderSlice.actions;
+export const {
+	createOrder,
+	successfulOrder,
+	rejectedOrder,
+	payRequest,
+	paySuccess,
+	payFail,
+	payReset,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -6,6 +6,7 @@ import { store } from "./redux/store";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { HelmetProvider } from "react-helmet-async";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -13,7 +14,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<HelmetProvider>
-					<App />
+					<PayPalScriptProvider
+					// deferLoading={true}
+					// options={{
+					// 	"client-id": "test",
+					// 	components: "buttons",
+					// 	currency: "USD",
+					// }}
+					>
+						<App />
+					</PayPalScriptProvider>
 				</HelmetProvider>
 			</ThemeProvider>
 		</Provider>

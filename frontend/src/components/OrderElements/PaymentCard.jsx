@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function PaymentCard({ paymentMethod }) {
+function PaymentCard({ paymentMethod, isPaid }) {
 	const { pathname } = useLocation();
 	return (
 		<>
@@ -12,6 +12,7 @@ function PaymentCard({ paymentMethod }) {
 						<strong>Method:</strong> {paymentMethod}
 					</p>
 					{pathname === "/placeorder" ? <Link to="/payment">Edit</Link> : null}
+					{isPaid ? "pago" : "sin pagar"}
 				</>
 			) : null}
 		</>

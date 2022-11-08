@@ -9,6 +9,7 @@ export default defineConfig({
 			"/api/orders": "http://localhost:5000/",
 			"/api/products": "http://localhost:5000/",
 			"/api/users": "http://localhost:5000/",
+			"/api/keys": "http://localhost:5000/",
 		},
 	},
 });

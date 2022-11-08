@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,26 +5,50 @@ import OrderItems from "../components/OrderElements/OrderItems";
 import OrderSummary from "../components/OrderElements/OrderSummary";
 import PaymentCard from "../components/OrderElements/PaymentCard";
 import ShippingCard from "../components/OrderElements/ShippingCard";
-import { fetchOrder } from "../redux/slices/orderSlice";
+import { fetchOrder, payReset } from "../redux/slices/orderSlice";
 import { StyledOrder } from "../styles/StyledPayment";
+import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import axios from "axios";
 
 function OrderScreen() {
 	const { userInfo } = useSelector((state) => state.user);
-	const { loading, error, order } = useSelector((state) => state.order);
+	const { loading, error, order, successPay } = useSelector(
+		(state) => state.order
+	);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const params = useParams();
 	const { id: orderId } = params;
 	const { shippingAddress } = order;
 
+	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
 	useEffect(() => {
 		if (!userInfo) {
 			return navigate("/login");
 		}
-		if (!order._id || (order._id && order._id !== orderId)) {
+		if (!order._id || successPay || (order._id && order._id !== orderId)) {
 			dispatch(fetchOrder({ userInfo, orderId }));
+			if (successPay) {
+				dispatch(payReset());
+			}
+		} else {
+			const loadPayPalScript = async () => {
+				const { data: clientId } = await axios.get("/api/keys/paypal", {
+					headers: { authorization: `Bearer ${userInfo.token}` },
+				});
+				paypalDispatch({
+					type: "resetOptions",
+					value: {
+						"client-id": clientId,
+						currency: "USD",
+					},
+				});
+				paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+			};
+			loadPayPalScript();
 		}
-	}, [userInfo]);
+	}, [userInfo, paypalDispatch, successPay]);
 
 	return loading ? (
 		<p>Loading...</p>
@@ -40,7 +63,10 @@ function OrderScreen() {
 						<ShippingCard {...shippingAddress} />
 					</div>
 					<div className="order-card">
-						<PaymentCard paymentMethod={order.paymentMethod} />
+						<PaymentCard
+							paymentMethod={order.paymentMethod}
+							isPaid={order.isPaid}
+						/>
 					</div>
 					<div className="order-card">
 						<OrderItems prodsInCart={order.orderItems} />
@@ -53,6 +79,10 @@ function OrderScreen() {
 						ivaPrice={order.ivaPrice}
 						totalPrice={order.totalPrice}
 						placeOrderHandler={order.placeOrderHandler}
+						isPaid={order.isPaid}
+						isPending={isPending}
+						order_id={order._id}
+						token={userInfo.token}
 					/>
 				</div>
 			</div>

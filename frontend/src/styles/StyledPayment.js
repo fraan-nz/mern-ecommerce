@@ -119,18 +119,15 @@ export const StyledOrder = styled.div`
 		}
 
 		.order-total {
-			min-width: 200px;
-			width: max-content;
+			min-width: 260px;
 			height: max-content;
+
 			div,
 			strong {
 				display: grid;
 				grid-template-columns: 100px 1fr;
 				grid-template-rows: auto;
 				padding: 5px;
-			}
-			div {
-				border-bottom: 1px solid lightgray;
 			}
 
 			.order-total {
