@@ -5,8 +5,8 @@ export const fetchData = createAsyncThunk(
 	"fetchData",
 	async (args, thunkAPI) => {
 		try {
-			const result = await axios.get("/api/products");
-			return result.data;
+			const { data } = await axios.get("/api/products");
+			return data;
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.message);
 		}

@@ -3,6 +3,7 @@ import Layout from "./components/Layout/Layout";
 import NavBar from "./components/NavBar/NavBar";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import OrderScreen from "./screens/OrderScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/payment" element={<PaymentScreen />} />
 					<Route path="/placeorder" element={<PlaceOrderScreen />} />
 					<Route path="/orders/:id" element={<OrderScreen />} />
+					<Route path="/ordershistory" element={<OrderHistoryScreen />} />
 					<Route path="/" element={<HomeScreen />} />
 				</Routes>
 			</Layout>
