@@ -16,15 +16,16 @@ function OrderScreen() {
 	const dispatch = useDispatch();
 	const params = useParams();
 	const { id: orderId } = params;
+	const { shippingAddress } = order;
 
 	useEffect(() => {
-		dispatch(fetchOrder({ userInfo, orderId }));
 		if (!userInfo) {
 			return navigate("/login");
 		}
-		// if (!order._id || (order._id && order._id !== orderId)) {
-		// }
-	}, []);
+		if (!order._id || (order._id && order._id !== orderId)) {
+			dispatch(fetchOrder({ userInfo, orderId }));
+		}
+	}, [userInfo]);
 
 	return loading ? (
 		<p>Loading...</p>
@@ -32,11 +33,11 @@ function OrderScreen() {
 		<p>Error...</p>
 	) : (
 		<StyledOrder>
-			<h1>Order</h1>
+			<h1>Order {order._id}</h1>
 			<div className="order">
 				<div className="order-info">
 					<div className="order-card">
-						<ShippingCard shippingAddress={order.shippingAddress} />
+						<ShippingCard {...shippingAddress} />
 					</div>
 					<div className="order-card">
 						<PaymentCard paymentMethod={order.paymentMethod} />
@@ -47,7 +48,7 @@ function OrderScreen() {
 				</div>
 				<div className="order-total">
 					<OrderSummary
-						subTotalPrice={order.subTotalPrice}
+						subTotalPrice={order.subtotalPrice}
 						shippingPrice={order.shippingPrice}
 						ivaPrice={order.ivaPrice}
 						totalPrice={order.totalPrice}

@@ -27,7 +27,7 @@ function PlaceOrderScreen() {
 
 	const subTotalPrice = roundPrice(totalAmount(prodsInCart));
 	const shippingPrice =
-		totalAmount(prodsInCart) > 100 ? roundPrice(0) : roundPrice(10);
+		totalAmount(prodsInCart) > 1000 ? roundPrice(0) : roundPrice(10);
 	const ivaPrice = roundPrice(totalAmount(prodsInCart) * 0.21);
 
 	const totalPrice = roundPrice(
@@ -76,7 +76,7 @@ function PlaceOrderScreen() {
 			<div className="order">
 				<div className="order-info">
 					<div className="order-card">
-						<ShippingCard shippingAddress={shippingAddress} />
+						<ShippingCard {...shippingAddress} />
 					</div>
 					<div className="order-card">
 						<PaymentCard paymentMethod={paymentMethod} />

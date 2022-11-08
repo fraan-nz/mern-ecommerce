@@ -1,14 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function PaymentCard({ paymentMethod }) {
+	const { pathname } = useLocation();
 	return (
 		<>
-			<h3>Payment</h3>
-			<p>
-				<strong>Method:</strong> {paymentMethod}
-			</p>
-			<Link to="/payment">Edit</Link>
+			{paymentMethod ? (
+				<>
+					<h3>Payment</h3>
+					<p>
+						<strong>Method:</strong> {paymentMethod}
+					</p>
+					{pathname === "/placeorder" ? <Link to="/payment">Edit</Link> : null}
+				</>
+			) : null}
 		</>
 	);
 }
