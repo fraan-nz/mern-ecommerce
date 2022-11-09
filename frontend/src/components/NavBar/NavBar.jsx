@@ -23,7 +23,10 @@ const NavBar = () => {
 	const navigate = useNavigate();
 	const menuRef = useRef();
 	const btnRef = useRef();
-	useOnClickOutside({ btnRef, menuRef }, () => setOpenNav(false));
+	useOnClickOutside({ btnRef, menuRef }, () => {
+		setOpenNav(false);
+		setDropdown(false);
+	});
 
 	useEffect(() => {
 		if (!userInfo) {
@@ -33,10 +36,16 @@ const NavBar = () => {
 
 	const handleOpenNav = () => {
 		setOpenNav(!openNav);
+		setDropdown(false);
 	};
 
 	const handleOpenDropdown = () => {
 		setDropdown(!dropdown);
+	};
+
+	const signoutHandler = () => {
+		dispatch(logoutUser());
+		window.location.href = "/signin";
 	};
 
 	return (
@@ -51,12 +60,12 @@ const NavBar = () => {
 						onClick={() => setOpenNav(false)}
 						className={({ isActive }) => (isActive ? "active" : "")}
 					>
-						Cart{" "}
+						Cart
 						{prodsInCart.length > 0 && (
 							<Badge inCart={totalQuantity(prodsInCart)} />
 						)}
 					</StyledLink>
-					<div className="dropdown__container">
+					<ul className="dropdown__container">
 						{userInfo ? (
 							<button onClick={handleOpenDropdown}>{userInfo.name}</button>
 						) : (
@@ -70,12 +79,18 @@ const NavBar = () => {
 						)}
 						{userInfo ? (
 							<StyledDropDown open={dropdown}>
-								<StyledLink to="/profile">User Profile</StyledLink>
-								<StyledLink to="/orderhistory">Order History</StyledLink>
-								<button onClick={() => dispatch(logoutUser())}>Sign Out</button>
+								<StyledLink to="/profile" onClick={handleOpenNav}>
+									User Profile
+								</StyledLink>
+								<StyledLink to="/ordershistory" onClick={handleOpenNav}>
+									Order History
+								</StyledLink>
+								<button className="sign-out" onClick={signoutHandler}>
+									Sign Out
+								</button>
 							</StyledDropDown>
 						) : null}
-					</div>
+					</ul>
 				</NavMenu>
 				<button className="burger__btn" onClick={handleOpenNav} ref={btnRef}>
 					<FaBars />

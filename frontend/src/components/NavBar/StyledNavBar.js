@@ -48,22 +48,32 @@ export const NavMenu = styled.ul`
 	@media screen and (max-width: 768px) {
 		width: 100%;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-evenly;
+		gap: 0;
 		background-color: ${(props) => props.theme.secondary};
 		color: ${(props) => props.theme.primary};
 		position: absolute;
 		left: 0;
 		top: 60px;
-		height: 130px;
-		max-height: 0;
+		height: 0px;
+		transition: height 0.8s ease;
 		overflow: hidden;
-		transition: max-height 0.8s ease;
+		z-index: 10;
 
-		${(props) => props.isOpen && `max-height: 130px; `}
+		${(props) =>
+			props.isOpen
+				? `
+			height: 120px;
+			overflow: visible;
+		`
+				: ""}
 	}
 
 	.dropdown__container {
 		position: relative;
+		/* height: 300px; */
+		width: 100%;
+		text-align: center;
 
 		button {
 			background: none;
@@ -71,36 +81,72 @@ export const NavMenu = styled.ul`
 			color: ${(props) => props.theme.white};
 			font-size: 1rem;
 			cursor: pointer;
-
-			&:last-child {
-				&:hover {
-					color: ${(props) => props.theme.accent};
-				}
-			}
 		}
 	}
 `;
 
 export const StyledDropDown = styled.ul`
-	width: max-content;
-	padding: 10px;
-	background-color: ${(props) => props.theme.secondary};
+	display: flex;
+	width: 110px;
+	height: 0;
+	background: ${(props) => props.theme.secondary};
 	position: absolute;
-	top: 42px;
-	right: -20px;
+	right: 0;
+	top: 30px;
 	flex-direction: column;
-	gap: 10px;
-	text-align: center;
-	border-radius: 5px;
-	display: none;
+	overflow: hidden;
+	justify-content: space-evenly;
+	transition: height 0.3s ease;
+	border-radius: 2px;
+
+	a {
+		color: lightgrey;
+
+		&.active {
+			color: lightgrey;
+		}
+		&:hover {
+			color: lightgrey;
+		}
+	}
+
+	button.sign-out {
+		color: lightgrey;
+		&:hover {
+			color: lightgrey;
+		}
+	}
 
 	${({ open }) => {
 		return open
 			? `
-		display: flex;
+			height: 120px;
 		`
 			: "";
 	}}
+
+	@media screen and (max-width: 768px) {
+		background: ${(props) => props.theme.accent};
+		width: 100%;
+
+		a {
+			color: ${(props) => props.theme.primary};
+
+			&.active {
+				color: ${(props) => props.theme.primary};
+			}
+			&:hover {
+				color: ${(props) => props.theme.primary};
+			}
+		}
+
+		button.sign-out {
+			color: ${(props) => props.theme.primary};
+			&:hover {
+				color: ${(props) => props.theme.primary};
+			}
+		}
+	}
 `;
 
 export const StyledLink = styled(NavLink)`

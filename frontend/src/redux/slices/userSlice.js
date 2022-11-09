@@ -32,6 +32,30 @@ export const signUpUser = createAsyncThunk(
 	}
 );
 
+export const updateUser = createAsyncThunk(
+	"userSlice",
+	async ({ name, email, password, token }, thunkAPI) => {
+		try {
+			const { data } = await axios.put(
+				"/api/users/profile",
+				{
+					name,
+					email,
+					password,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	}
+);
+
 const userEmptyState = {
 	userInfo: localStorage.getItem("userData")
 		? JSON.parse(localStorage.getItem("userData"))
@@ -42,6 +66,8 @@ const userEmptyState = {
 	paymentMethod: localStorage.getItem("paymentMethod")
 		? JSON.parse(localStorage.getItem("paymentMethod"))
 		: null,
+	error: "",
+	loading: false,
 };
 
 export const userSlice = createSlice({
@@ -64,30 +90,44 @@ export const userSlice = createSlice({
 		},
 	},
 	extraReducers: {
-		// [loginUser.pending]: (state, action) => {
-		// },
+		[signInUser.pending]: (state, action) => {
+			state.loading = true;
+			state.error = "";
+		},
 		[signInUser.fulfilled]: (state, action) => {
 			state.userInfo = { ...action.payload };
-			state.userInfo.error = "";
+			state.error = "";
+			state.loading = false;
 			localStorage.setItem("userData", JSON.stringify(action.payload));
 		},
 		[signInUser.rejected]: (state, action) => {
-			state.userInfo.email = "";
-			state.userInfo.isAdmin = "";
-			state.userInfo._id = "";
-			state.userInfo.token = "";
+			state.loading = false;
 			state.error = action.payload;
+		},
+		[signUpUser.pending]: (state, action) => {
+			state.loading = true;
+			state.error = "";
 		},
 		[signUpUser.fulfilled]: (state, action) => {
 			state.userInfo = { ...action.payload };
-			state.userInfo.error = "";
+			state.error = "";
 			localStorage.setItem("userData", JSON.stringify(action.payload));
 		},
 		[signUpUser.rejected]: (state, action) => {
-			state.userInfo.email = "";
-			state.userInfo.isAdmin = "";
-			state.userInfo._id = "";
-			state.userInfo.token = "";
+			state.loading = false;
+			state.error = action.payload;
+		},
+		[updateUser.pending]: (state, action) => {
+			state.loading = true;
+			state.error = "";
+		},
+		[updateUser.fulfilled]: (state, action) => {
+			state.userInfo = { ...action.payload };
+			state.error = "";
+			localStorage.setItem("userData", JSON.stringify(action.payload));
+		},
+		[updateUser.rejected]: (state, action) => {
+			state.loading = false;
 			state.error = action.payload;
 		},
 	},
