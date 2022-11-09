@@ -8,6 +8,7 @@ import {
 import { Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
+import Loader from "../components/Loader/Loader";
 
 function ProductScreen() {
 	const [product, setProduct] = useState({});
@@ -41,7 +42,7 @@ function ProductScreen() {
 				<title>{product.name}</title>
 			</Helmet>
 			{loading ? (
-				<p>Loading...</p>
+				<Loader />
 			) : (
 				<StyledProdContainer>
 					<img src={product.image} alt={product.name} />

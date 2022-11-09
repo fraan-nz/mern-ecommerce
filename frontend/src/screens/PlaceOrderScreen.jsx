@@ -16,6 +16,7 @@ import OrderSummary from "../components/OrderElements/OrderSummary";
 import ShippingCard from "../components/OrderElements/ShippingCard";
 import PaymentCard from "../components/OrderElements/PaymentCard";
 import OrderItems from "../components/OrderElements/OrderItems";
+import { Helmet } from "react-helmet-async";
 
 function PlaceOrderScreen() {
 	const { shippingAddress, paymentMethod, userInfo } = useSelector(
@@ -70,32 +71,37 @@ function PlaceOrderScreen() {
 	};
 
 	return (
-		<StyledOrder>
-			<CheckoutSteps step1 step2 step3 step4 />
-			<h1>Preview Order</h1>
-			<div className="order">
-				<div className="order-info">
-					<div className="order-card">
-						<ShippingCard {...shippingAddress} />
+		<>
+			<Helmet>
+				<title>Order Checkout</title>
+			</Helmet>
+			<StyledOrder>
+				<CheckoutSteps step1 step2 step3 step4 />
+				<h1>Preview Order</h1>
+				<div className="order">
+					<div className="order-info">
+						<div className="order-card">
+							<ShippingCard {...shippingAddress} />
+						</div>
+						<div className="order-card">
+							<PaymentCard paymentMethod={paymentMethod} />
+						</div>
+						<div className="order-card">
+							<OrderItems prodsInCart={prodsInCart} />
+						</div>
 					</div>
-					<div className="order-card">
-						<PaymentCard paymentMethod={paymentMethod} />
-					</div>
-					<div className="order-card">
-						<OrderItems prodsInCart={prodsInCart} />
+					<div className="order-total">
+						<OrderSummary
+							subTotalPrice={subTotalPrice}
+							shippingPrice={shippingPrice}
+							ivaPrice={ivaPrice}
+							totalPrice={totalPrice}
+							placeOrderHandler={placeOrderHandler}
+						/>
 					</div>
 				</div>
-				<div className="order-total">
-					<OrderSummary
-						subTotalPrice={subTotalPrice}
-						shippingPrice={shippingPrice}
-						ivaPrice={ivaPrice}
-						totalPrice={totalPrice}
-						placeOrderHandler={placeOrderHandler}
-					/>
-				</div>
-			</div>
-		</StyledOrder>
+			</StyledOrder>
+		</>
 	);
 }
 

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const signInUser = createAsyncThunk(
 	"userSlice",
@@ -11,6 +12,7 @@ export const signInUser = createAsyncThunk(
 			});
 			return data;
 		} catch (error) {
+			toast.error("Email or Password not valid");
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
@@ -27,6 +29,7 @@ export const signUpUser = createAsyncThunk(
 			});
 			return data;
 		} catch (error) {
+			toast.error(error.message);
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
@@ -49,8 +52,10 @@ export const updateUser = createAsyncThunk(
 					},
 				}
 			);
+			toast.success("Profile updated");
 			return data;
 		} catch (error) {
+			toast.error(error.message);
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
@@ -111,6 +116,7 @@ export const userSlice = createSlice({
 		[signUpUser.fulfilled]: (state, action) => {
 			state.userInfo = { ...action.payload };
 			state.error = "";
+			state.loading = false;
 			localStorage.setItem("userData", JSON.stringify(action.payload));
 		},
 		[signUpUser.rejected]: (state, action) => {
@@ -124,6 +130,7 @@ export const userSlice = createSlice({
 		[updateUser.fulfilled]: (state, action) => {
 			state.userInfo = { ...action.payload };
 			state.error = "";
+			state.loading = false;
 			localStorage.setItem("userData", JSON.stringify(action.payload));
 		},
 		[updateUser.rejected]: (state, action) => {

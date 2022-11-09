@@ -5,6 +5,13 @@ export const StyledCartSection = styled.section`
 	display: flex;
 	gap: 20px;
 
+	.empty {
+		margin-top: 40px;
+		text-align: center;
+		width: 100%;
+		font-size: 1.2rem;
+	}
+
 	@media screen and (max-width: 1024px) {
 		flex-direction: column;
 	}

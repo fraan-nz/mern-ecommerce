@@ -1,63 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../components/Loader/Loader";
 import { updateUser } from "../redux/slices/userSlice";
 
+import Form from "../components/Form/Form";
+
 function ProfileScreen() {
-	const { userInfo } = useSelector((state) => state.user);
-	const [name, setName] = useState(userInfo.name);
-	const [email, setEmail] = useState(userInfo.email);
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
+	const { userInfo, loading } = useSelector((state) => state.user);
 	const { token } = userInfo;
 	const dispatch = useDispatch();
 
-	const submitHandler = (e) => {
-		e.preventDefault();
+	const submitHandler = (data) => {
+		const { name, email, password } = data;
 		dispatch(updateUser({ name, email, password, token }));
 	};
 
 	return (
 		<>
-			<h1>Profile Screen</h1>
-			<form onSubmit={submitHandler}>
-				<label>
-					Name
-					<input
-						type="text"
-						required
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
-				</label>
-				<label>
-					Email
-					<input
-						type="email"
-						required
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</label>
-				<label>
-					Password
-					<input
-						type="password"
-						value={password}
-						required
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</label>
-				<label>
-					Confirm Password
-					<input
-						type="password"
-						value={confirmPassword}
-						required
-						onChange={(e) => setConfirmPassword(e.target.value)}
-					/>
-				</label>
-				<button>Update</button>
-			</form>
+			<Helmet>
+				<title>Profile</title>
+			</Helmet>
+			{loading ? (
+				<Loader />
+			) : (
+				<>
+					<h1>Profile Screen</h1>
+					<Form submitHandler={submitHandler} />
+				</>
+			)}
 		</>
 	);
 }

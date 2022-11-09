@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../redux/slices/userSlice";
 import CheckoutSteps from "../components/CheckoutSteps/CheckoutSteps";
 import { StyledOrder } from "../styles/StyledPayment";
+import { Helmet } from "react-helmet-async";
 
 function ShippingAdressScreen() {
 	const { shippingAddress, userInfo } = useSelector((store) => store.user);
@@ -35,73 +36,78 @@ function ShippingAdressScreen() {
 	}, [userInfo, navigate]);
 
 	return (
-		<StyledOrder>
-			<CheckoutSteps step1 step2 />
-			<h1>Shipping Address</h1>
-			<form onSubmit={submitHandler} className="address">
-				<label>
-					Full Name
-					<input
-						type="text"
-						value={fullName}
-						onChange={(e) => {
-							setFullName(e.target.value);
-						}}
-						required
-					/>
-				</label>
+		<>
+			<Helmet>
+				<title>Order Checkout</title>
+			</Helmet>
+			<StyledOrder>
+				<CheckoutSteps step1 step2 />
+				<h1>Shipping Address</h1>
+				<form onSubmit={submitHandler} className="address">
+					<label>
+						Full Name
+						<input
+							type="text"
+							value={fullName}
+							onChange={(e) => {
+								setFullName(e.target.value);
+							}}
+							required
+						/>
+					</label>
 
-				<label>
-					Address
-					<input
-						type="text"
-						value={address}
-						onChange={(e) => {
-							setAddress(e.target.value);
-						}}
-						required
-					/>
-				</label>
+					<label>
+						Address
+						<input
+							type="text"
+							value={address}
+							onChange={(e) => {
+								setAddress(e.target.value);
+							}}
+							required
+						/>
+					</label>
 
-				<label>
-					City
-					<input
-						type="text"
-						value={city}
-						onChange={(e) => {
-							setCity(e.target.value);
-						}}
-						required
-					/>
-				</label>
+					<label>
+						City
+						<input
+							type="text"
+							value={city}
+							onChange={(e) => {
+								setCity(e.target.value);
+							}}
+							required
+						/>
+					</label>
 
-				<label>
-					Postal Code
-					<input
-						type="text"
-						value={postalCode}
-						onChange={(e) => {
-							setPostalCode(e.target.value);
-						}}
-						required
-					/>
-				</label>
+					<label>
+						Postal Code
+						<input
+							type="text"
+							value={postalCode}
+							onChange={(e) => {
+								setPostalCode(e.target.value);
+							}}
+							required
+						/>
+					</label>
 
-				<label>
-					Country
-					<input
-						type="text"
-						value={country}
-						onChange={(e) => {
-							setCountry(e.target.value);
-						}}
-						required
-					/>
-				</label>
+					<label>
+						Country
+						<input
+							type="text"
+							value={country}
+							onChange={(e) => {
+								setCountry(e.target.value);
+							}}
+							required
+						/>
+					</label>
 
-				<button>Continue</button>
-			</form>
-		</StyledOrder>
+					<button>Continue</button>
+				</form>
+			</StyledOrder>
+		</>
 	);
 }
 

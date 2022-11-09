@@ -11,8 +11,13 @@ function PaymentCard({ paymentMethod, isPaid }) {
 					<p>
 						<strong>Method:</strong> {paymentMethod}
 					</p>
-					{pathname === "/placeorder" ? <Link to="/payment">Edit</Link> : null}
-					{isPaid ? "pago" : "sin pagar"}
+					{pathname === "/placeorder" ? (
+						<Link to="/payment">Edit</Link>
+					) : isPaid ? (
+						<p className="status green">Paid</p>
+					) : (
+						<p className="status red">Not Paid</p>
+					)}
 				</>
 			) : null}
 		</>

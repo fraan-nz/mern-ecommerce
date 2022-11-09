@@ -9,6 +9,9 @@ import { fetchOrder, payReset } from "../redux/slices/orderSlice";
 import { StyledOrder } from "../styles/StyledPayment";
 import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+import Loader from "../components/Loader/Loader";
+import ErrorPage from "./ErrorPage";
 
 function OrderScreen() {
 	const { userInfo } = useSelector((state) => state.user);
@@ -50,43 +53,55 @@ function OrderScreen() {
 		}
 	}, [userInfo, paypalDispatch, successPay]);
 
-	return loading ? (
-		<p>Loading...</p>
-	) : error ? (
-		<p>Error...</p>
-	) : (
-		<StyledOrder>
-			<h1>Order {order._id}</h1>
-			<div className="order">
-				<div className="order-info">
-					<div className="order-card">
-						<ShippingCard {...shippingAddress} />
-					</div>
-					<div className="order-card">
-						<PaymentCard
-							paymentMethod={order.paymentMethod}
-							isPaid={order.isPaid}
-						/>
-					</div>
-					<div className="order-card">
-						<OrderItems prodsInCart={order.orderItems} />
-					</div>
-				</div>
-				<div className="order-total">
-					<OrderSummary
-						subTotalPrice={order.subtotalPrice}
-						shippingPrice={order.shippingPrice}
-						ivaPrice={order.ivaPrice}
-						totalPrice={order.totalPrice}
-						placeOrderHandler={order.placeOrderHandler}
-						isPaid={order.isPaid}
-						isPending={isPending}
-						order_id={order._id}
-						token={userInfo.token}
-					/>
-				</div>
-			</div>
-		</StyledOrder>
+	return (
+		<>
+			<Helmet>
+				<title>Order</title>
+			</Helmet>
+			{loading ? (
+				<Loader />
+			) : error ? (
+				<ErrorPage />
+			) : (
+				<>
+					<StyledOrder>
+						<h1>Order {order._id}</h1>
+						<div className="order">
+							<div className="order-info">
+								<div className="order-card">
+									<ShippingCard
+										{...shippingAddress}
+										isDelivered={order.isDelivered}
+									/>
+								</div>
+								<div className="order-card">
+									<PaymentCard
+										paymentMethod={order.paymentMethod}
+										isPaid={order.isPaid}
+									/>
+								</div>
+								<div className="order-card">
+									<OrderItems prodsInCart={order.orderItems} />
+								</div>
+							</div>
+							<div className="order-total">
+								<OrderSummary
+									subTotalPrice={order.subtotalPrice}
+									shippingPrice={order.shippingPrice}
+									ivaPrice={order.ivaPrice}
+									totalPrice={order.totalPrice}
+									placeOrderHandler={order.placeOrderHandler}
+									isPaid={order.isPaid}
+									isPending={isPending}
+									order_id={order._id}
+									token={userInfo.token}
+								/>
+							</div>
+						</div>
+					</StyledOrder>
+				</>
+			)}
+		</>
 	);
 }
 

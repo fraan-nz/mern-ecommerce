@@ -1,6 +1,6 @@
 import React from "react";
 import CartItem from "../components/Cart/CartItem";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
 	StyledCart,
@@ -20,26 +20,35 @@ function CartScreen() {
 	return (
 		<>
 			<Helmet>
-				<title>E-commerce</title>
+				<title>Cart</title>
 			</Helmet>
 			<h1>Products in Cart</h1>
 			<StyledCartSection>
-				<StyledCart>
-					{prodsInCart.map((prod) => {
-						return <CartItem {...prod} key={prod.slug} />;
-					})}
-				</StyledCart>
-				<div className="subtotal">
-					Subtotal ({totalQuantity(prodsInCart)}) items : <br /> ${" "}
-					{totalAmount(prodsInCart)}
-					<button
-						className="checkout"
-						disabled={prodsInCart.length === 0}
-						onClick={checkoutHandler}
-					>
-						Proceed to Checkout
-					</button>
-				</div>
+				{prodsInCart.length > 0 ? (
+					<>
+						<StyledCart>
+							{prodsInCart.map((prod) => {
+								return <CartItem {...prod} key={prod.slug} />;
+							})}
+						</StyledCart>
+						<div className="subtotal">
+							Subtotal ({totalQuantity(prodsInCart)}) items : <br /> ${" "}
+							{totalAmount(prodsInCart)}
+							<button
+								className="checkout"
+								disabled={prodsInCart.length === 0}
+								onClick={checkoutHandler}
+							>
+								Proceed to Checkout
+							</button>
+						</div>
+					</>
+				) : (
+					<div className="empty">
+						<p>The car is empty</p>
+						<Link to="/">Add products</Link>
+					</div>
+				)}
 			</StyledCartSection>
 		</>
 	);

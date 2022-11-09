@@ -4,55 +4,40 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signInUser } from "../redux/slices/userSlice";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import Loader from "../components/Loader/Loader";
+import Form from "../components/Form/Form";
 
 function SignInScreen() {
-	const { userInfo } = useSelector((state) => state.user);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const { search } = useLocation();
+	const { userInfo, loading } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const redirectInUrl = new URLSearchParams(search).get("redirect");
-	const redirect = redirectInUrl ? redirectInUrl : "/";
 
-	const submitHandler = async (e) => {
-		e.preventDefault();
+	const submitHandler = async (data) => {
+		const { email, password } = data;
 		dispatch(signInUser({ email, password }));
 	};
 
 	useEffect(() => {
 		if (userInfo) {
-			navigate(redirect || "/");
+			navigate("/");
 		}
 	}, [userInfo]);
 
 	return (
-		<StyledSignIn>
-			<h1>Sign In</h1>
-			<form onSubmit={submitHandler}>
-				<label>
-					Email
-					<input
-						type="email"
-						required
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</label>
-				<label>
-					Password
-					<input
-						type="password"
-						required
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</label>
-				<button>Sign In</button>
-			</form>
-			<p>
-				New customer?{" "}
-				<Link to={`/signup?redirect=${redirect}`}>Create you account</Link>
-			</p>
-		</StyledSignIn>
+		<>
+			<Helmet>
+				<title>Sign In</title>
+			</Helmet>
+			{loading ? (
+				<Loader />
+			) : (
+				<>
+					<h1>Sign In</h1>
+					<Form submitHandler={submitHandler} />
+				</>
+			)}
+		</>
 	);
 }
 

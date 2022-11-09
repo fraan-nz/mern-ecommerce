@@ -92,7 +92,7 @@ export const StyledDropDown = styled.ul`
 	background: ${(props) => props.theme.secondary};
 	position: absolute;
 	right: 0;
-	top: 30px;
+	top: 35px;
 	flex-direction: column;
 	overflow: hidden;
 	justify-content: space-evenly;

@@ -3,6 +3,11 @@ import styled from "styled-components";
 export const StyledOrder = styled.div`
 	h1 {
 		margin-block: 50px;
+
+		@media screen and (max-width: 488px) {
+			font-size: 1.5rem;
+			margin-block: 0 20px;
+		}
 	}
 
 	.address,
@@ -64,6 +69,22 @@ export const StyledOrder = styled.div`
 				flex: 0 1 auto;
 				min-height: min-content;
 				min-width: min-content;
+
+				.status {
+					width: 100%;
+					margin-top: 10px;
+					border-radius: 2px;
+					text-align: center;
+					font-weight: 600;
+					&.green {
+						color: green;
+						background-color: lightgreen;
+					}
+					&.red {
+						color: red;
+						background-color: lightcoral;
+					}
+				}
 			}
 		}
 

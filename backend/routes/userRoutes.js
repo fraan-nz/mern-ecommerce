@@ -52,7 +52,6 @@ userRouter.put(
 	isAuth,
 	expressAsyncHandler(async (req, res) => {
 		const user = await User.findById(req.user._id);
-		console.log(req.user._id);
 
 		if (user) {
 			user.name = req.body.name || user.name;
