@@ -8,7 +8,7 @@ export const schema1 = yup
 		confirmPassword: yup
 			.string()
 			.required("Password is required")
-			.oneOf([yup.ref("password")], "Your passwords do not match."),
+			.oneOf([yup.ref("password")], "Your passwords do not match"),
 	})
 	.required();
 

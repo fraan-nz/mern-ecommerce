@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { StyledSignIn } from "../styles/StyledSignIn";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signInUser } from "../redux/slices/userSlice";
 import { useEffect } from "react";
@@ -12,6 +11,10 @@ function SignInScreen() {
 	const { userInfo, loading } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { search } = useLocation();
+
+	const redirectInUrl = new URLSearchParams(search).get("redirect");
+	const redirect = redirectInUrl ? redirectInUrl : "/";
 
 	const submitHandler = async (data) => {
 		const { email, password } = data;
@@ -20,7 +23,7 @@ function SignInScreen() {
 
 	useEffect(() => {
 		if (userInfo) {
-			navigate("/");
+			navigate(redirect || "/");
 		}
 	}, [userInfo]);
 
@@ -34,7 +37,7 @@ function SignInScreen() {
 			) : (
 				<>
 					<h1>Sign In</h1>
-					<Form submitHandler={submitHandler} />
+					<Form submitHandler={submitHandler} redirect={redirect} />
 				</>
 			)}
 		</>

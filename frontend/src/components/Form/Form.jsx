@@ -1,13 +1,12 @@
 import React from "react";
-import { StyledSignIn } from "../../styles/StyledSignIn";
+import { StyledSignIn } from "./StyledSignIn";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useLocation } from "react-router-dom";
 import { schema1, schema2 } from "../../utils/schema";
-import { useEffect } from "react";
 
-function Form({ submitHandler }) {
-	const { search, pathname } = useLocation();
+function Form({ submitHandler, redirect }) {
+	const { pathname } = useLocation();
 
 	const {
 		register,
@@ -18,40 +17,39 @@ function Form({ submitHandler }) {
 			pathname === "/signin" ? yupResolver(schema2) : yupResolver(schema1),
 	});
 
-	const redirectInUrl = new URLSearchParams(search).get("redirect");
-	const redirect = redirectInUrl ? redirectInUrl : "/";
-
 	return (
 		<StyledSignIn>
 			<form onSubmit={handleSubmit(submitHandler)}>
-				{pathname === "/signup" ? (
+				{pathname === "/signup" || pathname === "/profile" ? (
 					<label>
 						<p>Name</p>
 						<input type="text" {...register("name")} />
-						<p>{errors.name?.message}</p>
+						<p className="form-error">{errors.name?.message}</p>
 					</label>
 				) : null}
 				<label>
 					<p>Email</p>
 					<input type="text" {...register("email")} />
-					<p>{errors.email?.message}</p>
+					<p className="form-error">{errors.email?.message}</p>
 				</label>
 				<label>
 					<p>Password</p>
 					<input type="password" {...register("password")} />
-					<p>{errors.password?.message}</p>
+					<p className="form-error">{errors.password?.message}</p>
 				</label>
-				{pathname === "/signup" ? (
+				{pathname === "/signup" || pathname === "/profile" ? (
 					<label>
 						<p>Confirm Password</p>
 						<input type="password" {...register("confirmPassword")} />
-						<p>{errors.confirmPassword?.message}</p>
+						<p className="form-error">{errors.confirmPassword?.message}</p>
 					</label>
 				) : null}
 				{pathname === "/signin" ? (
 					<button>Sign In</button>
-				) : (
+				) : pathname === "/signup" ? (
 					<button>Sign Up</button>
+				) : (
+					<button>Update</button>
 				)}
 
 				{pathname === "/signin" ? (
