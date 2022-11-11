@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const StyledGridProducts = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(110px, 275px));
+	justify-content: center;
 	gap: 10px;
 `;
 
@@ -79,6 +80,12 @@ export const StyledStars = styled.div`
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+	}
+
+	@media screen and (max-width: 1150px) {
+		display: flex;
+		flex-direction: column;
+		line-height: 1;
 	}
 `;
 

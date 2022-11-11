@@ -13,6 +13,7 @@ import { logoutUser } from "../../redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { FaBars } from "react-icons/fa";
+import SearchBox from "./SearchBox";
 
 const NavBar = () => {
 	const [openNav, setOpenNav] = useState(false);
@@ -52,8 +53,10 @@ const NavBar = () => {
 		<Nav>
 			<Container>
 				<StyledLink to="/" className="brand">
-					E-commerce
+					<span>Sport</span>
+					<span>store</span>
 				</StyledLink>
+				<SearchBox />
 				<NavMenu isOpen={openNav} ref={menuRef}>
 					<StyledLink
 						to="/cart"

@@ -15,12 +15,13 @@ export const Nav = styled.nav`
 
 export const Container = styled.div`
 	width: 100%;
-	max-width: 1400px;
+	max-width: 1600px;
 	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding-inline: 5%;
+	gap: 5px;
 
 	@media screen and (max-width: 768px) {
 		padding-inline: 5%;
@@ -32,11 +33,48 @@ export const Container = styled.div`
 		font-size: 1.8rem;
 		background: none;
 		border: none;
+		line-height: 0;
 		@media screen and (max-width: 768px) {
 			display: block;
 			cursor: pointer;
 		}
 	}
+`;
+
+export const SearchMenu = styled.div`
+	display: flex;
+	gap: 10px;
+
+	button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 1rem;
+		color: ${(props) => props.theme.white};
+	}
+`;
+
+export const FiltersMenu = styled.ul`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	background-color: ${(props) => props.theme.secondary};
+	height: 0px;
+	transition: height 0.8s ease;
+	overflow: hidden;
+
+	${(props) =>
+		props.isOpen
+			? `
+			height: 40px;
+			// overflow: visible;
+		`
+			: ""}
 `;
 
 export const NavMenu = styled.ul`
@@ -71,7 +109,6 @@ export const NavMenu = styled.ul`
 
 	.dropdown__container {
 		position: relative;
-		/* height: 300px; */
 		width: 100%;
 		text-align: center;
 
@@ -161,9 +198,19 @@ export const StyledLink = styled(NavLink)`
 		color: ${(props) => props.theme.accent};
 	}
 	&.brand {
-		font-size: 1.3rem;
-		font-weight: 600;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		line-height: 1;
 		color: ${(props) => props.theme.white};
+		span:first-child {
+			font-size: 1.5rem;
+			font-weight: 600;
+		}
+		span:last-child {
+			font-size: 1rem;
+			font-weight: 600;
+		}
 		&:hover {
 			color: ${(props) => props.theme.white};
 		}
@@ -185,5 +232,34 @@ export const StyledLink = styled(NavLink)`
 		&:hover {
 			color: ${(props) => props.theme.accent};
 		}
+	}
+`;
+
+export const StyledSearchBox = styled.form`
+	max-width: 300px;
+	height: 25px;
+	display: flex;
+	border-radius: 2px;
+	overflow: hidden;
+
+	input {
+		width: 100%;
+		height: 100%;
+		border: none;
+		padding-inline: 5px;
+
+		&:focus {
+			outline-color: ${(props) => props.theme.accent};
+		}
+	}
+	button {
+		height: 100%;
+		width: 25px;
+		background: ${(props) => props.theme.accent};
+		border: none;
+	}
+
+	@media screen and (max-width: 768px) {
+		max-width: 150px;
 	}
 `;

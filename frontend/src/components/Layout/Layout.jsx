@@ -1,11 +1,27 @@
 import React from "react";
-import { StyledLayout, StyledContainer } from "./StyledLayout";
+import { useLocation } from "react-router-dom";
+import {
+	StyledLayout,
+	StyledContainer,
+	StyledAsideLayout,
+	StyledAsideContainer,
+} from "./StyledLayout";
 
 function Layout({ children }) {
+	const { pathname } = useLocation();
+
 	return (
-		<StyledLayout>
-			<StyledContainer>{children}</StyledContainer>
-		</StyledLayout>
+		<>
+			{pathname === "/" || pathname === "/search" ? (
+				<StyledAsideLayout>
+					<StyledAsideContainer>{children}</StyledAsideContainer>
+				</StyledAsideLayout>
+			) : (
+				<StyledLayout>
+					<StyledContainer>{children}</StyledContainer>
+				</StyledLayout>
+			)}
+		</>
 	);
 }
 
