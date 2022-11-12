@@ -16,10 +16,10 @@ import axios from "axios";
 export const fetchData = createAsyncThunk(
 	"fetchData",
 	async (args, thunkAPI) => {
-		const { page, query, category, brand, price, rating, order } = args;
+		const { page, query, category, brand, price, order } = args;
 		try {
 			const { data } = await axios.get(
-				`/api/products/search?page=${page}&query=${query}&category=${category}&brand=${brand}&price=${price}&rating=${rating}&order=${order}`
+				`/api/products/search?page=${page}&query=${query}&category=${category}&brand=${brand}&price=${price}&order=${order}`
 			);
 
 			return data;

@@ -236,7 +236,7 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const StyledSearchBox = styled.form`
-	max-width: 300px;
+	width: 300px;
 	height: 25px;
 	display: flex;
 	border-radius: 2px;
@@ -254,9 +254,11 @@ export const StyledSearchBox = styled.form`
 	}
 	button {
 		height: 100%;
-		width: 25px;
+		width: 30px;
 		background: ${(props) => props.theme.accent};
 		border: none;
+		display: grid;
+		place-content: center;
 	}
 
 	@media screen and (max-width: 768px) {

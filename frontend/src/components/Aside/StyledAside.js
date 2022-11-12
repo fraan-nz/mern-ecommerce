@@ -10,7 +10,6 @@ export const StyledAside = styled.aside`
 	left: 0;
 	bottom: 0;
 	z-index: 0;
-
 	@media screen and (max-width: 769px) {
 		width: 110px;
 		padding: 10px;
@@ -46,8 +45,14 @@ export const StyledSearchInfo = styled.div`
 	& > div:first-of-type {
 		display: flex;
 		align-items: center;
+
 		button {
 			margin-left: 10px;
+			background: none;
+			border: none;
+			font-size: 1.2rem;
+			line-height: 0;
+			cursor: pointer;
 		}
 	}
 	& > div:last-of-type {

@@ -8,6 +8,7 @@ import Loader from "../components/Loader/Loader";
 import Aside from "../components/Aside/Aside";
 import { useLocation } from "react-router-dom";
 import { StyledSearchInfo } from "../components/Aside/StyledAside";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function HomeScreen() {
 	const dispatch = useDispatch();
@@ -18,7 +19,6 @@ function HomeScreen() {
 	const brand = sp.get("brand") || "all";
 	const query = sp.get("query") || "all";
 	const price = sp.get("price") || "all";
-	const rating = sp.get("rating") || "all";
 	const order = sp.get("order") || "newest";
 	const page = sp.get("page") || 1;
 
@@ -26,24 +26,19 @@ function HomeScreen() {
 		(state) => state.fetchData
 	);
 
-	useEffect(() => {
-		dispatch(fetchData({ page, query, category, brand, price, rating, order }));
-	}, [category, order, page, price, query, rating]);
-
 	const getFilterUrl = (filter) => {
 		const filterPage = filter.page || page;
 		const filterCategory = filter.category || category;
 		const filterBrand = filter.brand || brand;
 		const filterQuery = filter.query || query;
-		const filterRating = filter.rating || rating;
 		const filterPrice = filter.price || price;
 		const sortOrder = filter.order || order;
-		return `/search?category=${filterCategory}&brand=${filterBrand}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
+		return `/search?category=${filterCategory}&brand=${filterBrand}&query=${filterQuery}&price=${filterPrice}&order=${sortOrder}&page=${filterPage}`;
 	};
 
 	useEffect(() => {
-		dispatch(fetchData({ page, query, category, brand, price, rating, order }));
-	}, []);
+		dispatch(fetchData({ page, query, category, brand, price, order }));
+	}, [category, order, page, price, query]);
 
 	return (
 		<>
@@ -69,11 +64,10 @@ function HomeScreen() {
 								{category !== "all" && " | " + category}
 								{brand !== "all" && " | " + brand}
 								{price !== "all" && " | Price " + price}
-								{query !== "all" ||
-								category !== "all" ||
-								rating !== "all" ||
-								price !== "all" ? (
-									<button onClick={() => navigate("/search")}>X</button>
+								{query !== "all" || category !== "all" || price !== "all" ? (
+									<button onClick={() => navigate("/search")}>
+										<AiOutlineCloseCircle />
+									</button>
 								) : null}
 							</div>
 							<div>

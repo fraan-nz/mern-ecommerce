@@ -23,12 +23,12 @@ productRouter.get(
 	"/search",
 	expressAsyncHandler(async (req, res) => {
 		const { query } = req;
+		console.log(query);
 		const pageSize = query.pageSize || PAGE_SIZE;
 		const page = query.page || 1;
 		const category = query.category || "";
 		const brand = query.brand || "";
 		const price = query.price || "";
-		const rating = query.rating || "";
 		const order = query.order || "";
 		const searchQuery = query.query || "";
 
@@ -43,14 +43,6 @@ productRouter.get(
 				: {};
 		const categoryFilter = category && category !== "all" ? { category } : {};
 		const brandFilter = brand && brand !== "all" ? { brand } : {};
-		const ratingFilter =
-			rating && rating !== "all"
-				? {
-						rating: {
-							$gte: Number(rating),
-						},
-				  }
-				: {};
 		const priceFilter =
 			price && price !== "all"
 				? {
@@ -79,7 +71,6 @@ productRouter.get(
 			...categoryFilter,
 			...brandFilter,
 			...priceFilter,
-			...ratingFilter,
 		})
 			.sort(sortOrder)
 			.skip(pageSize * (page - 1))
@@ -90,7 +81,6 @@ productRouter.get(
 			...categoryFilter,
 			...brandFilter,
 			...priceFilter,
-			...ratingFilter,
 		});
 		res.send({
 			products,

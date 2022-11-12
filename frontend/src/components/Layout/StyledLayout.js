@@ -21,16 +21,18 @@ export const StyledContainer = styled.div`
 export const StyledAsideLayout = styled.main`
 	display: flex;
 	margin-top: 60px;
+	display: flex;
+	justify-content: flex-start;
 `;
 
 export const StyledAsideContainer = styled.div`
 	width: 100%;
 	min-height: calc(100vh - 60px);
+	padding-right: 5%;
 	margin-left: 200px;
-	padding-inline-start: 2%;
-	padding-inline-end: 2%;
 	padding-block: 10px;
-	max-width: 1500px;
+	padding-left: 40px;
+	max-width: 1563px;
 
 	@media screen and (max-width: 768px) {
 		margin-left: 110px;
