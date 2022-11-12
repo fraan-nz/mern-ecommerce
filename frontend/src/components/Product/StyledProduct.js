@@ -14,7 +14,11 @@ export const StyledProduct = styled.div`
 	overflow: hidden;
 
 	& img {
-		width: 100%;
+		width: auto;
+		max-height: 273px;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
 	}
 
 	& .container {
@@ -93,11 +97,13 @@ export const StyledProdContainer = styled.div`
 	display: grid;
 	grid-template-columns: max-content max-content max-content;
 	justify-content: center;
+	margin-top: 10%;
 
 	& img {
 		width: 100%;
 		max-width: 500px;
 		place-self: center;
+		margin-right: 60px;
 	}
 
 	& .prod__desc {
@@ -232,6 +238,32 @@ export const StyledProdContainer = styled.div`
 			.button {
 				font-size: 0.8rem;
 			}
+		}
+	}
+`;
+
+export const StyledPaginate = styled.div`
+	width: 100%;
+	padding-block: 40px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+
+	button {
+		background: none;
+		border: none;
+		font-size: 1rem;
+		font-weight: 600;
+		border-radius: 50%;
+		border-color: lightgrey;
+		background-color: lightgray;
+		height: 30px;
+		width: 30px;
+		line-height: 0;
+		cursor: pointer;
+
+		&.active {
+			background-color: ${(props) => props.theme.accent};
 		}
 	}
 `;

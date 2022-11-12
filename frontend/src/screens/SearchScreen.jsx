@@ -3,7 +3,10 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/slices/fetchDataSlice";
 import Aside from "../components/Aside/Aside";
-import { StyledGridProducts } from "../components/Product/StyledProduct";
+import {
+	StyledGridProducts,
+	StyledPaginate,
+} from "../components/Product/StyledProduct";
 import Product from "../components/Product/Product";
 import { StyledSearchInfo } from "../components/Aside/StyledAside";
 import { Helmet } from "react-helmet-async";
@@ -89,15 +92,15 @@ function SearchScreen() {
 								<Product product={product} key={product.slug} />
 							))}
 						</StyledGridProducts>
-						<div>
+						<StyledPaginate>
 							{[...Array(pages).keys()].map((x) => (
 								<Link key={x + 1} to={getFilterUrl({ page: x + 1 })}>
-									<button className={Number(page) === x + 1 ? "" : ""}>
+									<button className={Number(page) === x + 1 ? "active" : ""}>
 										{x + 1}
 									</button>
 								</Link>
 							))}
-						</div>
+						</StyledPaginate>
 					</div>
 				</>
 			)}

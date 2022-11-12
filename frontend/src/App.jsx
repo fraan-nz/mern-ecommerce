@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import NavBar from "./components/NavBar/NavBar";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
@@ -23,14 +24,16 @@ function App() {
 					<Route path="/products/:slug" element={<ProductScreen />} />
 					<Route path="/cart" element={<CartScreen />} />
 					<Route path="/search" element={<SearchScreen />} />
+					<Route element={<ProtectedRoute />}>
+						<Route path="/profile" element={<ProfileScreen />} />
+						<Route path="/shipping" element={<ShippingAdressScreen />} />
+						<Route path="/payment" element={<PaymentScreen />} />
+						<Route path="/placeorder" element={<PlaceOrderScreen />} />
+						<Route path="/orders/:id" element={<OrderScreen />} />
+						<Route path="/ordershistory" element={<OrderHistoryScreen />} />
+					</Route>
 					<Route path="/signin" element={<SignInScreen />} />
 					<Route path="/signup" element={<SignUpScreen />} />
-					<Route path="/profile" element={<ProfileScreen />} />
-					<Route path="/shipping" element={<ShippingAdressScreen />} />
-					<Route path="/payment" element={<PaymentScreen />} />
-					<Route path="/placeorder" element={<PlaceOrderScreen />} />
-					<Route path="/orders/:id" element={<OrderScreen />} />
-					<Route path="/ordershistory" element={<OrderHistoryScreen />} />
 					<Route path="/" element={<HomeScreen />} />
 				</Routes>
 			</Layout>

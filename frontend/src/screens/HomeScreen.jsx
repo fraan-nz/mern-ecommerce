@@ -2,17 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/slices/fetchDataSlice";
 import Product from "../components/Product/Product";
-import { StyledGridProducts } from "../components/Product/StyledProduct";
+import {
+	StyledGridProducts,
+	StyledPaginate,
+} from "../components/Product/StyledProduct";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Loader/Loader";
 import Aside from "../components/Aside/Aside";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { StyledSearchInfo } from "../components/Aside/StyledAside";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function HomeScreen() {
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate();
 	const { search } = useLocation();
 	const sp = new URLSearchParams(search);
 	const category = sp.get("category") || "all";
@@ -59,18 +61,6 @@ function HomeScreen() {
 					<div>
 						<StyledSearchInfo>
 							<div>
-								{countProducts === 0 ? "No" : countProducts} Results
-								{query !== "all" && " | " + query}
-								{category !== "all" && " | " + category}
-								{brand !== "all" && " | " + brand}
-								{price !== "all" && " | Price " + price}
-								{query !== "all" || category !== "all" || price !== "all" ? (
-									<button onClick={() => navigate("/search")}>
-										<AiOutlineCloseCircle />
-									</button>
-								) : null}
-							</div>
-							<div>
 								Sort by
 								<select
 									value={order}
@@ -90,6 +80,15 @@ function HomeScreen() {
 								<Product product={product} key={product.slug} />
 							))}
 						</StyledGridProducts>
+						<StyledPaginate>
+							{[...Array(pages).keys()].map((x) => (
+								<Link key={x + 1} to={getFilterUrl({ page: x + 1 })}>
+									<button className={Number(page) === x + 1 ? "" : ""}>
+										{x + 1}
+									</button>
+								</Link>
+							))}
+						</StyledPaginate>
 					</div>
 				</>
 			)}

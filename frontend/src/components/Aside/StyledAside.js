@@ -58,6 +58,7 @@ export const StyledSearchInfo = styled.div`
 	& > div:last-of-type {
 		display: flex;
 		gap: 10px;
+		margin-left: auto;
 		select {
 			cursor: pointer;
 		}
