@@ -18,28 +18,6 @@ const prices = [
 	},
 ];
 
-const ratings = [
-	{
-		name: "4stars & up",
-		rating: 4,
-	},
-
-	{
-		name: "3stars & up",
-		rating: 3,
-	},
-
-	{
-		name: "2stars & up",
-		rating: 2,
-	},
-
-	{
-		name: "1stars & up",
-		rating: 1,
-	},
-];
-
 function Aside({ getFilterUrl, category, brand, price }) {
 	const [filters, setFilters] = useState({});
 	const { categories, brands } = filters;
@@ -63,7 +41,7 @@ function Aside({ getFilterUrl, category, brand, price }) {
 				<ul>
 					<li>
 						<Link
-							className={"all" === category ? "" : ""}
+							className={"all" === category ? "active" : ""}
 							to={getFilterUrl({ category: "all" })}
 						>
 							Any
@@ -73,7 +51,7 @@ function Aside({ getFilterUrl, category, brand, price }) {
 						categories.map((cat) => (
 							<li key={cat}>
 								<Link
-									className={cat === category ? "" : ""}
+									className={cat === category ? "active" : ""}
 									to={getFilterUrl({ category: cat })}
 								>
 									{cat}
@@ -87,20 +65,20 @@ function Aside({ getFilterUrl, category, brand, price }) {
 				<ul>
 					<li>
 						<Link
-							className={"all" === brand ? "" : ""}
+							className={"all" === brand ? "active" : ""}
 							to={getFilterUrl({ brand: "all" })}
 						>
 							Any
 						</Link>
 					</li>
 					{brands &&
-						brands.map((brand) => (
-							<li key={brand}>
+						brands.map((bb) => (
+							<li key={bb}>
 								<Link
-									className={brand === brand ? "" : ""}
-									to={getFilterUrl({ brand: brand })}
+									className={bb === brand ? "active" : ""}
+									to={getFilterUrl({ brand: bb })}
 								>
-									{brand}
+									{bb}
 								</Link>
 							</li>
 						))}
@@ -112,7 +90,7 @@ function Aside({ getFilterUrl, category, brand, price }) {
 				<ul>
 					<li>
 						<Link
-							className={"all" === price ? "" : ""}
+							className={"all" === price ? "active" : ""}
 							to={getFilterUrl({ price: "all" })}
 						>
 							Any
@@ -122,7 +100,7 @@ function Aside({ getFilterUrl, category, brand, price }) {
 						<li key={p.value}>
 							<Link
 								to={getFilterUrl({ price: p.value })}
-								className={p.value === price ? "" : ""}
+								className={p.value === price ? "active" : ""}
 							>
 								{p.name}
 							</Link>

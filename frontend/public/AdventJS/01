@@ -1,0 +1,16 @@
+const ovejas = [
+  { name: 'Noa', color: 'azul' },
+  { name: 'Euge', color: 'rojo' },
+  { name: 'Navidad', color: 'rojo' },
+  { name: 'Ki Na Ma', color: 'rojo'}
+];
+
+function contarOvejas(ovejas) {
+  // aquí tu magia
+ return ovejas.filter(oveja => {
+  const nameLower = oveja.name.toLowerCase()
+  return nameLower.includes('a') && nameLower.includes('n') && oveja.color === 'rojo'
+ })
+}
+
+contarOvejas(ovejas)

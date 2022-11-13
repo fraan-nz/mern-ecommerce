@@ -1,0 +1,8 @@
+const points = {
+  x : "23",
+  y :"434"
+}
+
+for (let point of points) {
+  console.log(point)
+}

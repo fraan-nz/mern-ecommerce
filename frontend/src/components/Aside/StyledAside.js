@@ -9,9 +9,9 @@ export const StyledAside = styled.aside`
 	top: 60px;
 	left: 0;
 	bottom: 0;
-	z-index: 0;
+
 	@media screen and (max-width: 769px) {
-		width: 110px;
+		width: 115px;
 		padding: 10px;
 	}
 `;
@@ -31,7 +31,17 @@ export const StyledFilter = styled.div`
 			a {
 				text-decoration: none;
 				color: ${(props) => props.theme.secondary};
+
+				&.active {
+					text-decoration: underline;
+				}
 			}
+		}
+	}
+	@media screen and (max-width: 769px) {
+		padding-block: 5px;
+		ul {
+			font-size: 0.9rem;
 		}
 	}
 `;
@@ -66,9 +76,10 @@ export const StyledSearchInfo = styled.div`
 
 	@media screen and (max-width: 769px) {
 		justify-content: flex-end;
+		flex-wrap: wrap;
 		margin-bottom: 10px;
 		& > div:first-of-type {
-			display: none;
+			font-size: 0.8rem;
 		}
 		& > div:last-of-type {
 			select {

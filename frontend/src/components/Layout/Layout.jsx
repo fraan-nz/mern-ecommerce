@@ -12,7 +12,7 @@ function Layout({ children }) {
 
 	return (
 		<>
-			{pathname === "/" || pathname === "/search" ? (
+			{pathname === "/" || pathname.includes("/search") ? (
 				<StyledAsideLayout>
 					<StyledAsideContainer>{children}</StyledAsideContainer>
 				</StyledAsideLayout>

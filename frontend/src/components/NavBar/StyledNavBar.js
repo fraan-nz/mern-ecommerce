@@ -11,6 +11,7 @@ export const Nav = styled.nav`
 	left: 0;
 	top: 0;
 	right: 0;
+	z-index: 100;
 `;
 
 export const Container = styled.div`
@@ -96,7 +97,6 @@ export const NavMenu = styled.ul`
 		height: 0px;
 		transition: height 0.8s ease;
 		overflow: hidden;
-		z-index: 10;
 
 		${(props) =>
 			props.isOpen
@@ -165,7 +165,6 @@ export const StyledDropDown = styled.ul`
 	@media screen and (max-width: 768px) {
 		background: ${(props) => props.theme.accent};
 		width: 100%;
-
 		a {
 			color: ${(props) => props.theme.primary};
 

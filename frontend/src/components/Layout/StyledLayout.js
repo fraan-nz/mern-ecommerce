@@ -35,6 +35,6 @@ export const StyledAsideContainer = styled.div`
 	max-width: 1563px;
 
 	@media screen and (max-width: 768px) {
-		margin-left: 110px;
+		margin-left: 90px;
 	}
 `;
