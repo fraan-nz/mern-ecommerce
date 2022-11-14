@@ -12,8 +12,20 @@ export const StyledProduct = styled.div`
 	border: 1px solid ${(props) => props.theme.secondary};
 	border-radius: 2px;
 	overflow: hidden;
+	animation: fadeIn 0.3s;
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
 
 	& img {
+		min-height: 273px;
+		min-width: 273px;
 		width: auto;
 		max-height: 273px;
 		margin-left: auto;
@@ -22,6 +34,8 @@ export const StyledProduct = styled.div`
 
 		@media screen and (max-width: 768px) {
 			width: 100%;
+			min-height: 210px;
+			min-width: 210px;
 		}
 	}
 

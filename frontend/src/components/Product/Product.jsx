@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { StyledProduct, StyledStars } from "./StyledProduct";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Product(props) {
 	const { product } = props;
@@ -12,7 +13,11 @@ function Product(props) {
 	return (
 		<StyledProduct>
 			<Link to={`/products/${product.slug}`}>
-				<img src={product.image} alt={product.name} />
+				<LazyLoadImage
+					src={product.image}
+					alt={product.name}
+					effect="opacity"
+				/>
 			</Link>
 			<div className="container">
 				<Link to={`/products/${product.slug}`} className="title">
